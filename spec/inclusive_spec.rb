@@ -28,11 +28,11 @@ RSpec.describe 'Inclusive Flip Flop (2 dots)' do
   end
 
   heading           'state       event  state'
-  # assert_transition :left,       true,  :true_right
-  # assert_transition :left,       false, :false_left
-  # assert_transition :right,      true,  :true_left
-  # assert_transition :right,      false, :true_right
-  # assert_transition :true_right, nil,   :right
-  # assert_transition :true_left,  nil,   :left
-  # assert_transition :false_left, nil,   :left
+  assert_transition :left,       true,  :right
+  assert_transition :left,       false, :false_left
+  assert_transition :right,      true,  :true_left
+  assert_transition :right,      false, :true_right
+  assert_transition :true_right, nil,   :right
+  assert_transition :true_left,  nil,   :left
+  assert_transition :false_left, nil,   :left
 end
