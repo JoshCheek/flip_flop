@@ -1,8 +1,5 @@
+require 'spec_helper'
 require 'exclusive_flip_flop'
-
-RSpec.configure do |config|
-  config.fail_fast = true
-end
 
 RSpec.describe 'Exclusive Flip Flop (3 dots)' do
   def flip_flop_states
@@ -15,18 +12,7 @@ RSpec.describe 'Exclusive Flip Flop (3 dots)' do
         states << [false, nil]
       end
     end
-    raise if events != [:untouched]
-    states.each_cons(2)
-          .flat_map { |(initial, event), (final, _)|
-            next [initial,                event] if Symbol === initial
-            next [:"#{initial}_#{final}", nil]   if TrueClass === initial || FalseClass === initial
-            raise "WTF: #{initial.inspect}"
-          }
-          .each_cons(3)
-          .select.with_index { |s, i| i.even? }
-          .each_with_object({}) { |(pre, event, post), map|
-            (map[pre] ||= {})[event] = post
-          }
+    build_state_transitions events, states
   end
 
   def self.heading(heading)
