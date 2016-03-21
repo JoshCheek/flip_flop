@@ -5,18 +5,21 @@ class FlipFlop
   end
 
   def event(event)
-    @state == :left  and return !event     ? :false_left :
-                                @inclusive ? :right :
-                                             :true_right
-    @state == :right and return event ? :true_left : :true_right
-    raise unless event.nil?
-    @state == :true_right and return :right
-    :left
+    case @state
+    when :left  then left  event
+    when :right then right event
+    else @state == :true_right ? :right : :left
+    end
   end
 
   private
 
-  def unexpected(case_value)
-    raise "Wtf is `#{case_value.inspect}`?"
+  def left(event)
+    return :false_left unless event
+    @inclusive ? :right : :true_right
+  end
+
+  def right(event)
+    event ? :true_left : :true_right
   end
 end
