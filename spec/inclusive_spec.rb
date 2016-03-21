@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'inclusive_flip_flop'
+require 'flip_flop'
 
 RSpec.describe 'Inclusive Flip Flop (2 dots)' do
   def flip_flop_states
@@ -22,7 +22,7 @@ RSpec.describe 'Inclusive Flip Flop (2 dots)' do
       expect(actual).to eq final
 
       # and now that this is what our state machine does
-      actual = InclusiveFlipFlop.new(initial).event(event)
+      actual = FlipFlop.new(initial, inclusive: true).event(event)
       expect(actual).to eq final
     end
   end
